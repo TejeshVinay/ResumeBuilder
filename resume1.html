@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Resume Builder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0066cc;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        .cta-button {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0066cc, #004d99);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-cta {
+            background-color: #ff9900;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .hero-cta:hover {
+            background-color: #e68a00;
+        }
+        
+        /* Template Preview */
+        .templates {
+            padding: 60px 0;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+        
+        .templates h2 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+        }
+        
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .template {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .template:hover {
+            transform: translateY(-10px);
+        }
+        
+        .template img {
+            width: 100%;
+            height: 350px;
+            object-fit:contain;
+            
+        }
+        
+        .template-info {
+            padding: 20px;
+        }
+        
+        .template-info h3 {
+            margin-bottom: 15px;
+        }
+        
+        /* Features */
+        .features {
+            padding: 60px 0;
+        }
+        
+        .features h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .feature i {
+            font-size: 40px;
+            color: #0066cc;
+            margin-bottom: 20px;
+        }
+        
+        .feature h3 {
+            margin-bottom: 15px;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            background-color: #f9f9f9;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .testimonials h2 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-author {
+            font-weight: bold;
+        }
+        
+        /* Pricing */
+        /* .pricing {
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .pricing h2 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .pricing-plan {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .popular {
+            background-color: #f0f7ff;
+        }
+        
+        .popular::before {
+            content: "Most Popular";
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #ff9900;
+            color: white;
+            padding: 5px 10px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .plan-name {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #0066cc;
+        }
+        
+        .plan-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .plan-features li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .plan-features li:before {
+            content: "✓";
+            color: #0066cc;
+            position: absolute;
+            left: 0;
+        } */
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #004d99, #0066cc);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 40px 0;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: #ccc;
+            text-decoration: none;
+        }
+        
+        .footer-column a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #555;
+        }
+        
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-container">
+            <div class="logo">ResumePro</div>
+            <div class="nav-links">
+                <a href="#temp">Templates</a>
+                <a href="#feat">Features</a>
+                <!-- <a href="#">Pricing</a> -->
+                <a href="#testimon">Blog</a>
+            </div>
+            <button class="cta-button" onclick="location.href='file:///C:/Users/vinee/OneDrive/Desktop/resume%20builder/signup.html'">Sign Up Free</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Create a Professional Resume in Minutes</h1>
+            <p>Stand out from the crowd with a professionally designed resume that gets you noticed. Easy to use, employer-approved templates.</p>
+            <button class="hero-cta" onclick="location.href='file:///C:/Users/vinee/OneDrive/Desktop/resume%20builder/templatepage.html'">Create My Resume Now</button>
+        </div>
+    </section>
+
+    <!-- Template Preview -->
+    <section id="temp" class="templates">
+        <div class="container">
+            <h2>Choose from Many Professional Templates</h2>
+            <p>Our expertly designed templates are approved by hiring managers across all industries</p>
+            <div class="template-grid">
+                <div class="template">
+                    <img src="C:\Users\vinee\OneDrive\Desktop\templates\img1.jpg" alt="Professional Resume Template">
+                    <div class="template-info">
+                        <h3>Executive</h3>
+                        <p>Perfect for senior positions</p>
+                    </div>
+                </div>
+                <div class="template">
+                    <img src="C:\Users\vinee\OneDrive\Desktop\templates\img2.jpg" alt="Modern Resume Template">
+                    <div class="template-info">
+                        <h3>Modern</h3>
+                        <p>Clean and contemporary design</p>
+                    </div>
+                </div>
+                <div class="template">
+                    <img src="C:\Users\vinee\OneDrive\Desktop\templates\img3.jpg" alt="Creative Resume Template">
+                    <div class="template-info">
+                        <h3>Creative</h3>
+                        <p>Stand out with unique styling</p>
+                    </div>
+                </div>
+                <div class="template">
+                    <img src="C:\Users\vinee\OneDrive\Desktop\templates\img4.jpg" alt="Simple Resume Template">
+                    <div class="template-info">
+                        <h3>Classic</h3>
+                        <p>Traditional and versatile</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="feat"class="features">
+        <div class="container">
+            <h2>Why Choose Our Resume Builder</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <i>📝</i>
+                    <h3>Easy to Use</h3>
+                    <p>Step-by-step guidance with our intuitive builder that does the formatting for you</p>
+                </div>
+                <div class="feature">
+                    <i>🎯</i>
+                    <h3>ATS-Optimized</h3>
+                    <p>Our templates are designed to pass through Applicant Tracking Systems</p>
+                </div>
+                <div class="feature">
+                    <i>📊</i>
+                    <h3>Industry-Specific Content</h3>
+                    <p>Tailored suggestions based on your industry and career level</p>
+                </div>
+                <div class="feature">
+                    <i>⏱</i>
+                    <h3>Save Time</h3>
+                    <p>Create a professional resume in less than 15 minutes</p>
+                </div>
+                <div class="feature">
+                    <i>💾</i>
+                    <h3>Multiple Formats</h3>
+                    <p>Download your resume as PDF, DOCX, or plain text</p>
+                </div>
+                <div class="feature">
+                    <i>🔄</i>
+                    <h3>Unlimited Edits</h3>
+                    <p>Update your resume anytime with our cloud-based storage</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimon" class="testimonials">
+        <div class="container">
+            <h2>Success Stories</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial">
+                    <p>"I landed three interviews in the first week of using my new resume. The templates are professional and the guidance was incredibly helpful."</p>
+                    <div class="testimonial-author">- Michael T., Marketing Director</div>
+                </div>
+                <div class="testimonial">
+                    <p>"After struggling to format my resume for hours, I found this website and created a perfect resume in 20 minutes. Got the job a week later!"</p>
+                    <div class="testimonial-author">- Sarah L., Software Engineer</div>
+                </div>
+                <div class="testimonial">
+                    <p>"As someone changing careers, the industry-specific guidance was invaluable. The templates look amazing and helped me stand out."</p>
+                    <div class="testimonial-author">- David R., Career Changer</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing
+    <section class="pricing">
+        <div class="container">
+            <h2>Choose Your Plan</h2>
+            <div class="pricing-grid">
+                <div class="pricing-plan">
+                    <div class="plan-name">Basic</div>
+                    <div class="plan-price">$0</div>
+                    <ul class="plan-features">
+                        <li>1 Resume Template</li>
+                        <li>PDF Downloads</li>
+                        <li>Basic Editor</li>
+                        <li>14-Day Access</li>
+                    </ul>
+                    <button class="cta-button">Get Started</button>
+                </div>
+                <div class="pricing-plan popular">
+                    <div class="plan-name">Premium</div>
+                    <div class="plan-price">$19.99</div>
+                    <ul class="plan-features">
+                        <li>All 50+ Templates</li>
+                        <li>Multiple Download Formats</li>
+                        <li>Cover Letter Builder</li>
+                        <li>ATS Optimization</li>
+                        <li>Unlimited Access</li>
+                    </ul>
+                    <button class="cta-button">Go Premium</button>
+                </div>
+                <div class="pricing-plan">
+                    <div class="plan-name">Professional</div>
+                    <div class="plan-price">$29.99</div>
+                    <ul class="plan-features">
+                        <li>Everything in Premium</li>
+                        <li>LinkedIn Profile Optimization</li>
+                        <li>Multiple Resume Versions</li>
+                        <li>Priority Support</li>
+                        <li>Resume Review by Expert</li>
+                    </ul>
+                    <button class="cta-button">Get Pro</button>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Start Building Your Professional Resume Today</h2>
+            <p>Join thousands of job seekers who have successfully landed their dream jobs with our resume builder.</p>
+            <button class="hero-cta">Create My Resume</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Features</h3>
+                    <ul>
+                        <li><a href="#">Resume Builder</a></li>
+                        <li><a href="#">Cover Letter Builder</a></li>
+                        <li><a href="#">Templates</a></li>
+                        <li><a href="#">Career Resources</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Follow Us</h3>
+                    <ul>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 ResumePro. All rights reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
