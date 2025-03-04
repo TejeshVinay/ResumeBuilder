@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Form</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 50%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+    text-align: center;
+    color: black;
+    background-color: #0066cc;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background: #ff9900;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+     }
+button:hover {
+    background: #e68a00;
+}
+
+button:active {
+    background: #cc7700;
+    transform: scale(0.98);
+}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Resume Form</h2>
+    <form id="resumeForm">
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" name="phone" required>
+
+        <label for="address">Address:</label>
+        <textarea id="address" name="address" rows="2"></textarea>
+
+        <label for="linkedin">LinkedIn Profile:</label>
+        <input type="url" id="linkedin" name="linkedin">
+
+        <label for="github">GitHub/Profile Website:</label>
+        <input type="url" id="github" name="github">
+
+        <label for="job_title">Current Job Title:</label>
+        <input type="text" id="job_title" name="job_title">
+
+        <label for="company">Company Name:</label>
+        <input type="text" id="company" name="company">
+
+        <label for="experience">Work Experience:</label>
+        <textarea id="experience" name="experience" rows="3"></textarea>
+
+        <label for="skills">Skills (comma-separated):</label>
+        <input type="text" id="skills" name="skills">
+
+        <label for="degree">Degree:</label>
+        <input type="text" id="degree" name="degree" required>
+
+        <label for="university">University/College:</label>
+        <input type="text" id="university" name="university" required>
+
+        <label for="grad_year">Graduation Year:</label>
+        <input type="text" id="grad_year" name="grad_year" required>
+
+        <label for="project">Project Title:</label>
+        <input type="text" id="project" name="project">
+
+        <label for="project_desc">Project Description:</label>
+        <textarea id="project_desc" name="project_desc" rows="3"></textarea>
+
+        <label for="tech">Technologies Used:</label>
+        <input type="text" id="tech" name="tech">
+
+        <label for="project_link">Project Link:</label>
+        <input type="url" id="project_link" name="project_link">
+
+        <label for="cert">Certification Name:</label>
+        <input type="text" id="cert" name="cert">
+
+        <label for="cert_org">Issuing Organization:</label>
+        <input type="text" id="cert_org" name="cert_org">
+
+        <label for="cert_year">Year of Completion:</label>
+        <input type="text" id="cert_year" name="cert_year">
+
+        <button type="submit">Generate Resume</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById("resumeForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        
+        const resumeData = {
+            name: document.getElementById("name").value,
+            email: document.getElementById("email").value,
+            phone: document.getElementById("phone").value,
+            address: document.getElementById("address").value,
+            linkedin: document.getElementById("linkedin").value,
+            github: document.getElementById("github").value,
+            job_title: document.getElementById("job_title").value,
+            company: document.getElementById("company").value,
+            experience: document.getElementById("experience").value,
+            skills: document.getElementById("skills").value,
+            degree: document.getElementById("degree").value,
+            university: document.getElementById("university").value,
+            grad_year: document.getElementById("grad_year").value,
+            project: document.getElementById("project").value,
+            project_desc: document.getElementById("project_desc").value,
+            tech: document.getElementById("tech").value,
+            project_link: document.getElementById("project_link").value,
+            cert: document.getElementById("cert").value,
+            cert_org: document.getElementById("cert_org").value,
+            cert_year: document.getElementById("cert_year").value
+        };
+        
+        localStorage.setItem("resumeData", JSON.stringify(resumeData));
+        window.location.href = "resume.html";
+    });
+</script>
+
+</body>
+</html>
