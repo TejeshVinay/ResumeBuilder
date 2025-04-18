@@ -4,74 +4,85 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Resume</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <title>CH L PAVAN ESWAR - Resume</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #fff;
       color: #000;
-      margin: 40px;
+      margin: 0;
+      padding: 0;
     }
 
     .resume-container {
-      max-width: 900px;
+      width: 793px;
+      /* A4 width at 96dpi */
       margin: auto;
+      padding: 24px;
+      /* reduced from 40px */
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-      padding: 20px;
       border-radius: 10px;
     }
 
     .header {
       text-align: center;
+      margin-bottom: 12px;
+      /* reduced */
     }
 
     .header h1 {
       margin: 0;
-      font-size: 32px;
+      font-size: 28px;
+      /* slightly smaller */
       font-weight: bold;
     }
 
     .contact {
-      margin-top: 8px;
+      margin-top: 6px;
     }
 
     .contact span,
     .contact a {
-      margin: 0 8px;
+      margin: 0 6px;
       text-decoration: none;
       color: #0077cc;
-      font-size: 14px;
+      font-size: 13px;
     }
 
     h2 {
       border-bottom: 2px solid red;
-      padding-bottom: 3px;
-      margin-top: 30px;
-      font-size: 20px;
+      padding-bottom: 2px;
+      margin-top: 20px;
+      margin-bottom: 8px;
+      font-size: 18px;
     }
 
     p,
     li {
-      font-size: 16px;
-      line-height: 1.6;
+      font-size: 14px;
+      line-height: 1.4;
+      margin: 4px 0;
     }
 
     .section {
-      margin-top: 20px;
-    }
-
-    .section strong {
-      font-weight: bold;
+      margin-top: 12px;
     }
 
     ul {
-      padding-left: 20px;
+      padding-left: 18px;
+      margin: 0;
     }
 
     .skills span {
       display: inline-block;
-      margin: 3px 10px 3px 0;
-      padding: 3px 10px;
+      margin: 3px 6px 3px 0;
+      padding: 3px 8px;
       background-color: #f0f0f0;
       border-radius: 5px;
     }
@@ -83,7 +94,7 @@
     }
 
     .project-title a {
-      font-size: 13px;
+      font-size: 12px;
       color: #0077cc;
       text-decoration: none;
     }
@@ -104,11 +115,30 @@
       width: 30%;
       text-align: right;
     }
+
     @page {
       size: A4;
-      margin: 2cm;
+      margin: 1.5cm;
+      /* slightly reduced margins */
+    }
+
+    .download-btn {
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .download-btn:hover {
+      background-color: #005fa3;
     }
   </style>
+
 </head>
 
 <body>
@@ -181,6 +211,10 @@
       <div id="profilesList"></div>
     </div> -->
   </div>
+  <br />
+  <div style="text-align: center; margin-bottom: 20px;">
+    <button class="download-btn" onclick="downloadPDF()">Download as PDF</button>
+  </div>
 
   <script>
     const contactData = JSON.parse(localStorage.getItem('contactData')) || {};
@@ -203,9 +237,10 @@
 
     // Contact Info
     document.getElementById('name').textContent = `${contactData.firstName || 'First'} ${contactData.lastName || 'Last'}`;
-    document.getElementById('email').textContent = contactData.email || 'example@example.com';
+    document.getElementById('email').textContent = contactData.email || 'example@example.com ';
     document.getElementById('phone').textContent = contactData.phone || '123-456-7890';
-    document.getElementById('linkedin').textContent = contactData.linkedin || 'linkedin.com/in/yourprofile';
+    document.getElementById('linkedin').innerHTML = `<a href="${contactData.linkedin || '#'}">${contactData.linkedin || 'linkedin.com/in/yourprofile'}</a>`;
+
     // document.getElementById('github').textContent = contactData.github || 'github.com/yourprofile';
 
     // Summary
@@ -263,6 +298,43 @@
       div.innerHTML = `<strong>${profile.platform}:</strong> <a href="${profile.url}" target="_blank">${profile.url}</a>`;
       profileList.appendChild(div);
     });
+    async function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF('p', 'pt', 'a4');
+
+      const resume = document.querySelector('.resume-container');
+
+      const canvas = await html2canvas(resume, {
+        scale: 2, // Higher scale = better quality
+        useCORS: true,
+        scrollY: -window.scrollY,
+      });
+
+      const imgData = canvas.toDataURL('image/jpeg', 1.0);
+      const imgProps = doc.getImageProperties(imgData);
+      const pdfWidth = doc.internal.pageSize.getWidth();
+      const pdfHeight = doc.internal.pageSize.getHeight();
+      const imgWidth = pdfWidth;
+      const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+
+      let heightLeft = imgHeight;
+      let position = 0;
+
+      // First page
+      doc.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pdfHeight;
+
+      // Add more pages if needed
+      while (heightLeft > 0) {
+        position -= pdfHeight;
+        doc.addPage();
+        doc.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pdfHeight;
+      }
+
+      doc.save('resume.pdf');
+    }
+
   </script>
 </body>
 
