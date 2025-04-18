@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <title>Resume</title>
+  <style>
+    body {
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      background-color: #fdfdfd;
+      color: #2c2c2c;
+      line-height: 1.6;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 794px;
+      height: 1123px;
+      margin: auto;
+      background: #fff;
+      padding: 2rem;
+      border: 1px solid #ddd;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-text h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    .header-text h2 {
+      margin: 0;
+      font-weight: normal;
+      font-size: 1rem;
+      color: #a67c52;
+    }
+
+    .job-dates {
+      display: flex;
+      gap: 10px;
+      /* Space between start and end date */
+      font-style: normal;
+      color: #666;
+      font-size: 0.9em;
+    }
+
+    .summary {
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .contact {
+      background-color: #e9ded4;
+      padding: 0.75rem 1rem;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+    }
+
+    .contact span {
+      margin-right: 1.5rem;
+    }
+
+    .main {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .left,
+    .right {
+      flex: 1;
+    }
+
+    .section {
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-weight: bold;
+      border-bottom: 1px solid #a67c52;
+      margin-bottom: 0.5rem;
+      color: #a67c52;
+    }
+
+    .experience-item,
+    .project-item {
+      margin-bottom: 1rem;
+    }
+
+    .experience-item strong,
+    .project-item strong {
+      font-weight: bold;
+    }
+
+    .experience-item em {
+      font-style: italic;
+      display: block;
+    }
+
+    .list ul {
+      padding-left: 1.2rem;
+      margin: 0.5rem 0;
+    }
+
+    .list ul li {
+      margin-bottom: 0.3rem;
+    }
+
+    a {
+      color: #8b5c2d;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .download-btn {
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .download-btn:hover {
+      background-color: #005fa3;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-text">
+        <h1 id="name"></h1>
+        <h2 id="profession"></h2>
+      </div>
+    </div>
+
+    <div class="summary">
+      <p id="summaryText"></p>
+    </div>
+
+    <div class="contact">
+      <span id="email"></span> |
+      <span id="phone"></span> |
+      <span id="location"></span><br />
+      <span id="linkedin"></span>
+    </div>
+
+    <div class="main">
+      <div class="left">
+        <div class="section">
+          <div class="section-title">Experience</div>
+          <div class="experience-item">
+            <strong id="jobTitle"></strong><br />
+            <span id="employer"></span><br />
+            <div class="job-dates">
+              <em id="startDate"></em> - <em id="endDate"></em>, <span id="jobLocation"></span>
+            </div>
+            <div class="list">
+              <ul>
+                <li id="jobDescription"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Education</div>
+          <p>
+            <strong id="degree"></strong><br />
+            <span id="institution"></span><br />
+            <em id="eduStartDate"></em> - <em id="eduEndDate"></em>, <span id="eduLocation"></span>
+          <p id="eduDescription"></p>
+          </p>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="section">
+          <div class="section-title">Skills</div>
+          <ul id="skillsList"></ul>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Projects</div>
+          <div id="projectsList"></div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Certifications</div>
+          <div id="certificationsList"></div>
+        </div>
+        <div class="section">
+          <div class="section-title">Languages</div>
+          <div id="languagesList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div style="text-align: center; margin-bottom: 20px;">
+    <button class="download-btn" onclick="downloadPDF()">Download as PDF</button>
+  </div>
+
+  <script>
+    const contactData = JSON.parse(localStorage.getItem('contactData')) || {};
+    const experienceData = JSON.parse(localStorage.getItem('experienceData')) || {};
+    const educationData = JSON.parse(localStorage.getItem('educationData')) || {};
+    const skillsData = JSON.parse(localStorage.getItem('skillsData')) || {};
+    const summaryData = JSON.parse(localStorage.getItem('summaryData')) || {};
+    const projectsData = JSON.parse(localStorage.getItem('projectsData')) || [];
+    const certificationsData = JSON.parse(localStorage.getItem('certificationsData')) || [];
+    const profilesData = JSON.parse(localStorage.getItem('profilesData')) || [];
+    const languagesData = contactData.languages || '';
+    const languagesList = document.getElementById('languagesList');
+    if (languagesData) {
+      const langItems = languagesData.split(',').map(lang => `<li>${lang.trim()}</li>`).join('');
+      languagesList.innerHTML = `<ul class="bullet-points">${langItems}</ul>`;
+    } else {
+      languagesList.innerHTML = '<p>No languages listed.</p>';
+    }
+    // Contact Info
+    document.getElementById('name').textContent = `${contactData.firstName || 'First'} ${contactData.lastName || 'Last'}`;
+    document.getElementById('profession').textContent = contactData.profession || 'Your Profession';
+    document.getElementById('email').innerHTML = `<strong>Email:</strong> ${contactData.email || 'example@example.com'}`;
+    document.getElementById('phone').innerHTML = `<strong>Phone:</strong>${contactData.phone || '123-456-7890'}`;
+    document.getElementById('location').innerHTML = `<strong>Location:</strong> ${contactData.city || 'City'}, ${contactData.state || 'State'}`;
+    document.getElementById('linkedin').innerHTML = `<strong>LinkedIn:</strong> ${contactData.linkedin || 'linkedin.com/in/yourprofile'}`;
+
+    // Summary
+    document.getElementById('summaryText').textContent = summaryData.summaryText || 'Your professional summary goes here.';
+
+    // Experience
+    document.getElementById('jobTitle').textContent = experienceData.jobTitle || 'Job Title';
+    document.getElementById('employer').textContent = experienceData.employer || 'Employer';
+    document.getElementById('startDate').textContent = experienceData.startDate || 'Start';
+    document.getElementById('endDate').textContent = experienceData.endDate || 'End';
+    document.getElementById('jobLocation').textContent = experienceData.jobLocation || 'Location';
+    document.getElementById('jobDescription').textContent = experienceData.jobDescription || 'Job responsibilities and description.';
+
+    // Education
+    document.getElementById('degree').textContent = educationData.degree || 'Degree';
+    document.getElementById('institution').textContent = educationData.institution || 'Institution';
+    document.getElementById('eduStartDate').textContent = educationData.eduStartDate || 'Start';
+    document.getElementById('eduEndDate').textContent = educationData.eduEndDate || 'End';
+    document.getElementById('eduLocation').textContent = educationData.eduLocation || 'Location';
+    document.getElementById('eduDescription').textContent = educationData.eduDescription || 'Education details and highlights.';
+
+    // Skills
+    const skillsList = document.getElementById('skillsList');
+    if (skillsData.skillsInput) {
+      skillsData.skillsInput.split(',').forEach(skill => {
+        const li = document.createElement('li');
+        li.textContent = skill.trim();
+        skillsList.appendChild(li);
+      });
+    }
+    // Projects
+    const projectsList = document.getElementById('projectsList');
+    projectsData.forEach(proj => {
+      const div = document.createElement('div');
+      div.classList.add('project-item');
+      div.innerHTML = `<strong>${proj.title}</strong><p>${proj.description}</p>`;
+      projectsList.appendChild(div);
+    });
+
+    // Certifications
+    const certList = document.getElementById('certificationsList');
+    certificationsData.forEach(cert => {
+      const div = document.createElement('div');
+      div.classList.add('cert-item');
+      div.innerHTML = `<strong>${cert.name}</strong> - <span>${cert.org}</span>`;
+      certList.appendChild(div);
+    });
+
+    // Profiles
+    const profileList = document.getElementById('profilesList');
+    profilesData.forEach(profile => {
+      const div = document.createElement('div');
+      div.classList.add('profile-link');
+      div.innerHTML = `<strong>${profile.platform}:</strong> <a href="${profile.url}" target="_blank">${profile.url}</a>`;
+      profileList.appendChild(div);
+    });
+    async function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF('p', 'pt', 'a4');
+
+      const resume = document.querySelector('.container');
+
+      const canvas = await html2canvas(resume, {
+        scale: 3,
+        useCORS: true,
+        scrollY: -window.scrollY,
+      });
+
+      const imgData = canvas.toDataURL('image/jpeg', 1.0);
+      const pdfWidth = doc.internal.pageSize.getWidth();
+      const imgProps = doc.getImageProperties(imgData);
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      doc.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+
+      doc.save('resume.pdf');
+    }
+
+  </script>
+</body>
+
+
+</html>

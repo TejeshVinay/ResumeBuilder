@@ -5,7 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resume Templates</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
         .templates {
             padding: 60px 0;
             text-align: center;
@@ -100,7 +111,8 @@
                         <h3>Executive</h3>
                         <p>Perfect for senior positions</p>
                         <button class="select-btn" onclick="location.href='file:./assets/templates/img1.jpg'">Preview</button>
-                        <button class="select-btn" onclick="location.href='form.html'">Select</button>
+                        <button class="select-btn" onclick="selectTemplate('./assets/templates/img1.jpg')">Select</button>
+
                     </div>
                 </div>
                 <div class="template">
@@ -109,7 +121,8 @@
                         <h3>Modern</h3>
                         <p>Clean and contemporary design</p>
                         <button class="select-btn" onclick="location.href='file:./assets/templates/img2.jpg'">Preview</button>
-                        <button class="select-btn" onclick="location.href='form.html'">Select</button>
+                        <button class="select-btn" onclick="selectTemplate('./assets/templates/img2.jpg')">Select</button>
+
                     </div>
                 </div>
                 <div class="template">
@@ -118,7 +131,8 @@
                         <h3>Creative</h3>
                         <p>Stand out with unique styling</p>
                         <button class="select-btn" onclick="location.href='file:./assets/templates/img3.jpg'">Preview</button>
-                        <button class="select-btn" onclick="location.href='form.html'">Select</button>
+                        <button class="select-btn" onclick="selectTemplate('./assets/templates/img3.jpg')">Select</button>
+
                     </div>
                 </div>
                 <div class="template">
@@ -127,57 +141,65 @@
                         <h3>Classic</h3>
                         <p>Traditional and versatile</p>
                         <button class="select-btn" onclick="location.href='file:./assets/templates/img4.jpg'">Preview</button>
-                        <button class="select-btn" onclick="location.href='form.html'">Select</button>
+                        <button class="select-btn" onclick="selectTemplate('./assets/templates/img4.jpg')">Select</button>
                     </div>
                 </div>
                 <div class="template">
                     <img src="./assets/templates/img5.jpg" alt="Simple Resume Template">
                     <div class="template-info">
-                        <h3>Classic</h3>
-                        <p>Traditional and versatile</p>
+                        <h3>Minimalist</h3>
+                        <p>Sleek and simple layout for a clean presentation</p>
                         <button class="select-btn" onclick="location.href='file:./assets/templates/img5.jpg'">Preview</button>
-                        <button class="select-btn" onclick="location.href='form.html'">Select</button>
+                        <button class="select-btn" onclick="selectTemplate('./assets/templates/img5.jpg')">Select</button>
                     </div>
                 </div>
                 <div class="template">
                     <img src="./assets/templates/img6.jpg" alt="Simple Resume Template">
                     <div class="template-info">
-                        <h3>Classic</h3>
-                        <p>Traditional and versatile</p>
+                        <h3>Elegant</h3>
+                        <p>Stylish design with a refined touch</p>
                         <button class="select-btn" onclick="location.href='file:./assets/templates/img6.jpg'">Preview</button>
-                        <button class="select-btn" onclick="location.href='form.html'">Select</button>
+                        <button class="select-btn" onclick="selectTemplate('./assets/templates/img6.jpg')">Select</button>
                     </div>
                 </div>
                 <div class="template">
                     <img src="./assets/templates/img7.jpg" alt="Simple Resume Template">
                     <div class="template-info">
-                        <h3>Classic</h3>
-                        <p>Traditional and versatile</p>
+                        <h3>Technical</h3>
+                        <p>Great for IT and engineering roles</p>
                         <button class="select-btn" onclick="location.href='file:./assets/templates/img7.jpg'">Preview</button>
-                        <button class="select-btn" onclick="location.href='form.html'">Select</button>
+                        <button class="select-btn" onclick="selectTemplate('./assets/templates/img7.jpg')">Select</button>
                     </div>
                 </div>
                 <div class="template">
                     <img src="./assets/templates/img8.jpg" alt="Simple Resume Template">
                     <div class="template-info">
-                        <h3>Classic</h3>
-                        <p>Traditional and versatile</p>
+                        <h3>Academic</h3>
+                        <p>Ideal for research or education-oriented profiles</p>
                         <button class="select-btn" onclick="location.href='file:./assets/templates/img8.jpg'">Preview</button>
-                        <button class="select-btn" onclick="location.href='form.html'">Select</button>
+                        <button class="select-btn" onclick="selectTemplate('./assets/templates/img8.jpg')">Select</button>
                     </div>
                 </div>
                 <div class="template">
                     <img src="./assets/templates/img9.jpg" alt="Simple Resume Template">
                     <div class="template-info">
-                        <h3>Classic</h3>
-                        <p>Traditional and versatile</p>
+                        <h3>Functional</h3>
+                        <p>Focuses on skills and accomplishments</p>
                         <button class="select-btn" onclick="location.href='file:./assets/templates/img9.jpg'">Preview</button>
-                        <button class="select-btn" onclick="location.href='form.html'">Select</button>
+                        <button class="select-btn" onclick="selectTemplate('./assets/templates/img9.jpg')">Select</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <script>
+        function selectTemplate(imagePath) {
+            const imageName = imagePath.split('/').pop(); // Extract file name from path
+            localStorage.setItem('selectedTemplate', imageName); // Store in localStorage
+            window.location.href = 'form.html'; // Redirect
+        }
+    </script>
 </body>
+
 
 </html>

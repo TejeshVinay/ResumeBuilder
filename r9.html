@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resume</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff;
+      color: #000;
+      margin: 40px;
+    }
+
+    .resume-container {
+      max-width: 900px;
+      margin: auto;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .header {
+      text-align: center;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    .contact {
+      margin-top: 8px;
+    }
+
+    .contact span,
+    .contact a {
+      margin: 0 8px;
+      text-decoration: none;
+      color: #0077cc;
+      font-size: 14px;
+    }
+
+    h2 {
+      border-bottom: 2px solid red;
+      padding-bottom: 3px;
+      margin-top: 30px;
+      font-size: 20px;
+    }
+
+    p,
+    li {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .section {
+      margin-top: 20px;
+    }
+
+    .section strong {
+      font-weight: bold;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    .skills span {
+      display: inline-block;
+      margin: 3px 10px 3px 0;
+      padding: 3px 10px;
+      background-color: #f0f0f0;
+      border-radius: 5px;
+    }
+
+    .project-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .project-title a {
+      font-size: 13px;
+      color: #0077cc;
+      text-decoration: none;
+    }
+
+    .education-entry,
+    .experience-entry {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .edu-left,
+    .exp-left {
+      width: 70%;
+    }
+
+    .edu-right,
+    .exp-right {
+      width: 30%;
+      text-align: right;
+    }
+    @page {
+      size: A4;
+      margin: 2cm;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="resume-container">
+    <div class="header">
+      <h1 id="name"></h1>
+      <div class="contact">
+        <span id="phone"></span>|
+        <span id="email"></span>|
+        <span id="linkedin"></span>
+        <!-- <span id="github"></span> -->
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Professional Summary</h2>
+      <p id="summaryText"></p>
+    </div>
+
+    <div class="section">
+      <h2>Education</h2>
+      <div class="education-entry">
+        <div class="edu-left">
+          <strong id="degree"></strong> - <span id="institution"></span>
+        </div>
+        <div class="edu-right">
+          <span id="eduStartDate"></span> - <span id="eduEndDate"></span>
+        </div>
+      </div>
+      <p id="eduLocation"></p>
+      <p id="eduDescription"></p>
+    </div>
+
+    <div class="section">
+      <h2>Experience</h2>
+      <div class="experience-entry">
+        <div class="exp-left">
+          <strong id="jobTitle"></strong> at <span id="employer"></span>
+        </div>
+        <div class="exp-right">
+          <span id="startDate"></span> - <span id="endDate"></span>
+        </div>
+      </div>
+      <p id="jobLocation"></p>
+      <p id="jobDescription"></p>
+    </div>
+
+    <div class="section">
+      <h2>Projects</h2>
+      <div id="projectsList"></div>
+    </div>
+
+    <div class="section">
+      <h2>Skills</h2>
+      <ul id="skillsList" class="bullet-points"></ul>
+    </div>
+
+    <div class="section">
+      <h2>Certifications</h2>
+      <div id="certificationsList"></div>
+    </div>
+
+    <div class="section">
+      <h2>Languages</h2>
+      <div id="languagesList"></div>
+    </div>
+
+    <!-- <div class="section">
+      <h2>Profiles</h2>
+      <div id="profilesList"></div>
+    </div> -->
+  </div>
+
+  <script>
+    const contactData = JSON.parse(localStorage.getItem('contactData')) || {};
+    const experienceData = JSON.parse(localStorage.getItem('experienceData')) || {};
+    const educationData = JSON.parse(localStorage.getItem('educationData')) || {};
+    const skillsData = JSON.parse(localStorage.getItem('skillsData')) || {};
+    const summaryData = JSON.parse(localStorage.getItem('summaryData')) || {};
+    const projectsData = JSON.parse(localStorage.getItem('projectsData')) || [];
+    const certificationsData = JSON.parse(localStorage.getItem('certificationsData')) || [];
+    const profilesData = JSON.parse(localStorage.getItem('profilesData')) || [];
+    const languagesData = contactData.languages || '';
+    const languagesList = document.getElementById('languagesList');
+
+    if (languagesData) {
+      const langItems = languagesData.split(',').map(lang => `<li>${lang.trim()}</li>`).join('');
+      languagesList.innerHTML = `<ul class="bullet-points">${langItems}</ul>`;
+    } else {
+      languagesList.innerHTML = '<p>No languages listed.</p>';
+    }
+
+    // Contact Info
+    document.getElementById('name').textContent = `${contactData.firstName || 'First'} ${contactData.lastName || 'Last'}`;
+    document.getElementById('email').textContent = contactData.email || 'example@example.com';
+    document.getElementById('phone').textContent = contactData.phone || '123-456-7890';
+    document.getElementById('linkedin').textContent = contactData.linkedin || 'linkedin.com/in/yourprofile';
+    // document.getElementById('github').textContent = contactData.github || 'github.com/yourprofile';
+
+    // Summary
+    document.getElementById('summaryText').textContent = summaryData.summaryText || 'Your professional summary goes here.';
+
+    // Experience
+    document.getElementById('jobTitle').textContent = experienceData.jobTitle || 'Job Title';
+    document.getElementById('employer').textContent = experienceData.employer || 'Employer';
+    document.getElementById('startDate').textContent = experienceData.startDate || 'Start';
+    document.getElementById('endDate').textContent = experienceData.endDate || 'End';
+    document.getElementById('jobLocation').textContent = experienceData.jobLocation || 'Location';
+    document.getElementById('jobDescription').textContent = experienceData.jobDescription || 'Job responsibilities and description.';
+
+    // Education
+    document.getElementById('degree').textContent = educationData.degree || 'Degree';
+    document.getElementById('institution').textContent = educationData.institution || 'Institution';
+    document.getElementById('eduStartDate').textContent = educationData.eduStartDate || 'Start';
+    document.getElementById('eduEndDate').textContent = educationData.eduEndDate || 'End';
+    document.getElementById('eduLocation').textContent = educationData.eduLocation || 'Location';
+    document.getElementById('eduDescription').textContent = educationData.eduDescription || 'Education details and highlights.';
+
+    // Skills
+    const skillsList = document.getElementById('skillsList');
+    if (skillsData.skillsInput) {
+      skillsData.skillsInput.split(',').forEach(skill => {
+        const li = document.createElement('li');
+        li.textContent = skill.trim();
+        skillsList.appendChild(li);
+      });
+    }
+
+    // Projects
+    const projectsList = document.getElementById('projectsList');
+    projectsData.forEach(proj => {
+      const div = document.createElement('div');
+      div.classList.add('project-item');
+      div.innerHTML = `<strong>${proj.title}</strong><p>${proj.description}</p>`;
+      projectsList.appendChild(div);
+    });
+
+    // Certifications
+    const certList = document.getElementById('certificationsList');
+    certificationsData.forEach(cert => {
+      const div = document.createElement('div');
+      div.classList.add('cert-item');
+      div.innerHTML = `<strong>${cert.name}</strong> - <span>${cert.org}</span>`;
+      certList.appendChild(div);
+    });
+
+    // Profiles
+    const profileList = document.getElementById('profilesList');
+    profilesData.forEach(profile => {
+      const div = document.createElement('div');
+      div.classList.add('profile-link');
+      div.innerHTML = `<strong>${profile.platform}:</strong> <a href="${profile.url}" target="_blank">${profile.url}</a>`;
+      profileList.appendChild(div);
+    });
+  </script>
+</body>
+
+</html>

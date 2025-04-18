@@ -1,62 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
     <title>Professional Resume Builder</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
-        
+
         body {
             color: #333;
             line-height: 1.6;
         }
-        
+
         .container {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 15px;
         }
-        
+
         /* Navigation */
         nav {
             background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             padding: 15px 0;
             position: sticky;
             top: 0;
             z-index: 100;
         }
-        
+
         .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .logo {
             font-size: 24px;
             font-weight: bold;
             color: #0066cc;
         }
-        
+
         .nav-links {
             display: flex;
             gap: 20px;
         }
-        
+
         .nav-links a {
             text-decoration: none;
             color: #555;
             font-weight: 500;
         }
-        
+
         .cta-button {
             background-color: #0066cc;
             color: white;
@@ -66,7 +73,7 @@
             font-weight: bold;
             cursor: pointer;
         }
-        
+
         /* Hero Section */
         .hero {
             background: linear-gradient(135deg, #0066cc, #004d99);
@@ -74,12 +81,12 @@
             padding: 80px 0;
             text-align: center;
         }
-        
+
         .hero h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
         }
-        
+
         .hero p {
             font-size: 1.2rem;
             margin-bottom: 30px;
@@ -87,7 +94,7 @@
             margin-left: auto;
             margin-right: auto;
         }
-        
+
         .hero-cta {
             background-color: #ff9900;
             color: white;
@@ -99,197 +106,141 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
-        
+
         .hero-cta:hover {
             background-color: #e68a00;
         }
-        
+
         /* Template Preview */
         .templates {
             padding: 60px 0;
             text-align: center;
             background-color: #f9f9f9;
         }
-        
+
         .templates h2 {
             font-size: 2rem;
             margin-bottom: 40px;
         }
-        
+
         .template-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
             margin-top: 40px;
         }
-        
+
         .template {
             background-color: white;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
         }
-        
+
         .template:hover {
             transform: translateY(-10px);
         }
-        
+
         .template img {
             width: 100%;
             height: 350px;
-            object-fit:contain;
-            
+            object-fit: contain;
+
         }
-        
+
         .template-info {
             padding: 20px;
         }
-        
+
         .template-info h3 {
             margin-bottom: 15px;
         }
-        
+
         /* Features */
         .features {
             padding: 60px 0;
-        }
-        
-        .features h2 {
+            background-color: #fafafa;
             text-align: center;
+        }
+
+        .features h2 {
             font-size: 2rem;
             margin-bottom: 40px;
+            font-weight: bold;
         }
-        
+
         .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
             gap: 30px;
         }
-        
+
         .feature {
-            text-align: center;
-            padding: 20px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 30px 20px;
+            width: 350px;
+            transition: transform 0.3s ease;
         }
-        
+
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+
         .feature i {
-            font-size: 40px;
-            color: #0066cc;
-            margin-bottom: 20px;
-        }
-        
-        .feature h3 {
+            font-size: 2.5rem;
+            display: block;
             margin-bottom: 15px;
         }
-        
+
+        .feature h3 {
+            font-size: 1.2rem;
+            margin: 10px 0;
+            font-weight: 600;
+        }
+
+        .feature p {
+            font-size: 0.95rem;
+            color: #444;
+        }
+
         /* Testimonials */
         .testimonials {
             background-color: #f9f9f9;
             padding: 60px 0;
             text-align: center;
         }
-        
+
         .testimonials h2 {
             font-size: 2rem;
             margin-bottom: 40px;
         }
-        
+
         .testimonial-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
         }
-        
+
         .testimonial {
             background-color: white;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
-        
+
         .testimonial p {
             font-style: italic;
             margin-bottom: 20px;
         }
-        
+
         .testimonial-author {
             font-weight: bold;
         }
-        
-        /* Pricing */
-        /* .pricing {
-            padding: 60px 0;
-            text-align: center;
-        }
-        
-        .pricing h2 {
-            font-size: 2rem;
-            margin-bottom: 40px;
-        }
-        
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        .pricing-plan {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            padding: 30px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .popular {
-            background-color: #f0f7ff;
-        }
-        
-        .popular::before {
-            content: "Most Popular";
-            position: absolute;
-            top: 0;
-            right: 0;
-            background-color: #ff9900;
-            color: white;
-            padding: 5px 10px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        
-        .plan-name {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-        
-        .plan-price {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #0066cc;
-        }
-        
-        .plan-features {
-            list-style: none;
-            margin-bottom: 30px;
-        }
-        
-        .plan-features li {
-            margin-bottom: 10px;
-            padding-left: 20px;
-            position: relative;
-        }
-        
-        .plan-features li:before {
-            content: "✓";
-            color: #0066cc;
-            position: absolute;
-            left: 0;
-        } */
-        
+
         /* CTA Section */
         .cta-section {
             background: linear-gradient(135deg, #004d99, #0066cc);
@@ -297,12 +248,12 @@
             padding: 80px 0;
             text-align: center;
         }
-        
+
         .cta-section h2 {
             font-size: 2rem;
             margin-bottom: 20px;
         }
-        
+
         .cta-section p {
             font-size: 1.2rem;
             margin-bottom: 30px;
@@ -310,61 +261,64 @@
             margin-left: auto;
             margin-right: auto;
         }
-        
+
         /* Footer */
         footer {
             background-color: #333;
             color: white;
             padding: 40px 0;
         }
-        
+
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 30px;
         }
-        
+
         .footer-column h3 {
             margin-bottom: 20px;
             font-size: 1.2rem;
         }
-        
+
         .footer-column ul {
             list-style: none;
         }
-        
+
         .footer-column li {
             margin-bottom: 10px;
         }
-        
+
         .footer-column a {
             color: #ccc;
             text-decoration: none;
         }
-        
+
         .footer-column a:hover {
             color: white;
         }
-        
+
         .copyright {
             text-align: center;
             margin-top: 40px;
             padding-top: 20px;
             border-top: 1px solid #555;
         }
-        
+
         /* Media Queries */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2rem;
             }
-            
+
             .nav-links {
                 display: none;
             }
         }
+
+        
     </style>
 </head>
+
 <body>
     <!-- Navigation -->
     <nav>
@@ -384,7 +338,8 @@
     <section class="hero">
         <div class="container">
             <h1>Create a Professional Resume in Minutes</h1>
-            <p>Stand out from the crowd with a professionally designed resume that gets you noticed. Easy to use, employer-approved templates.</p>
+            <p>Stand out from the crowd with a professionally designed resume that gets you noticed. Easy to use,
+                employer-approved templates.</p>
             <button class="hero-cta" onclick="location.href='file:./templatepage.html'">Create My Resume Now</button>
         </div>
     </section>
@@ -428,7 +383,7 @@
     </section>
 
     <!-- Features -->
-    <section id="feat"class="features">
+    <section id="feat" class="features">
         <div class="container">
             <h2>Why Choose Our Resume Builder</h2>
             <div class="features-grid">
@@ -472,15 +427,18 @@
             <h2>Success Stories</h2>
             <div class="testimonial-grid">
                 <div class="testimonial">
-                    <p>"I landed three interviews in the first week of using my new resume. The templates are professional and the guidance was incredibly helpful."</p>
+                    <p>"I landed three interviews in the first week of using my new resume. The templates are
+                        professional and the guidance was incredibly helpful."</p>
                     <div class="testimonial-author">- Michael T., Marketing Director</div>
                 </div>
                 <div class="testimonial">
-                    <p>"After struggling to format my resume for hours, I found this website and created a perfect resume in 20 minutes. Got the job a week later!"</p>
+                    <p>"After struggling to format my resume for hours, I found this website and created a perfect
+                        resume in 20 minutes. Got the job a week later!"</p>
                     <div class="testimonial-author">- Sarah L., Software Engineer</div>
                 </div>
                 <div class="testimonial">
-                    <p>"As someone changing careers, the industry-specific guidance was invaluable. The templates look amazing and helped me stand out."</p>
+                    <p>"As someone changing careers, the industry-specific guidance was invaluable. The templates look
+                        amazing and helped me stand out."</p>
                     <div class="testimonial-author">- David R., Career Changer</div>
                 </div>
             </div>
@@ -587,4 +545,5 @@
         </div>
     </footer>
 </body>
+
 </html>

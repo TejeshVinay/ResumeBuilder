@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <title>Resume</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      background: #fff;
+    }
+
+    .resume-container {
+      width: 794px;
+      height: 1123px;
+      margin: 20px auto;
+      display: flex;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .left-column {
+      width: 35%;
+      background-color: #d2ecf3;
+      padding: 25px;
+      box-sizing: border-box;
+      color: #000;
+    }
+
+    .right-column {
+      width: 65%;
+      padding: 30px;
+      box-sizing: border-box;
+      color: #000;
+    }
+
+    .name {
+      font-size: 28px;
+      font-weight: bold;
+      color: #0078AA;
+    }
+
+    .title {
+      font-size: 18px;
+      font-style: sans-serif;
+      margin-bottom: 15px;
+    }
+
+    .contact p {
+      margin: 5px 0;
+      font-size: 16px;
+    }
+
+    .section {
+      margin-top: 20px;
+    }
+
+    .section h2,
+    .sidebar-section h3,
+    .section-title {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #0078AA;
+      border-bottom: 2px solid #0078AA;
+      padding-bottom: 5px;
+    }
+
+    .sidebar-section {
+      margin-bottom: 20px;
+    }
+
+    ul {
+      padding-left: 20px;
+      margin: 5px 0;
+    }
+
+    ul li {
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .item-block {
+      margin-bottom: 15px;
+    }
+
+    .item-block strong {
+      font-weight: bold;
+    }
+
+    .item-block small {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .profile-link a {
+      word-break: break-all;
+      font-size: 13px;
+    }
+
+    .download-btn {
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .download-btn:hover {
+      background-color: #005fa3;
+    }
+
+    #linkedin {
+      margin-top: 10px;
+      font-size: 16px;
+      word-break: break-word;
+    }
+
+    #linkedin a {
+      font-size: 13px;
+      color: #0000EE;
+      /* standard link color or change to #0078AA to match theme */
+      text-decoration: none;
+    }
+
+    #linkedin a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="resume-container">
+    <!-- Left Column -->
+    <div class="left-column">
+      <div class="name" id="name"></div>
+      <div class="title" id="profession"></div>
+
+      <div class="contact">
+        <p id="location"></p>
+        <p id="phone"></p>
+        <p id="email"></p>
+      </div>
+
+      <div class="sidebar-section">
+        <h3>Skills</h3>
+        <ul id="skillsList"></ul>
+      </div>
+
+      <div class="sidebar-section">
+        <h3>Certifications</h3>
+        <ul id="certificationsList"></ul>
+      </div>
+
+      <div class="sidebar-section">
+        <h3>Languages</h3>
+        <div id="languagesList"></div>
+      </div>
+
+      <div class="sidebar-section">
+        <h3>Profile Links</h3>
+        <div id="profilesList"></div>
+        <p id="linkedin"></p>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="right-column">
+      <div class="section">
+        <h2>Career Objective</h2>
+        <p id="summaryText"></p>
+      </div>
+
+      <div class="section">
+        <h2>Work Experience</h2>
+        <div class="item-block">
+          <strong id="jobTitle"></strong> at <span id="employer"></span><br />
+          <small><span id="startDate"></span> - <span id="endDate"></span>, <span id="jobLocation"></span></small>
+          <p id="jobDescription"></p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Education</h2>
+        <div class="item-block">
+          <strong id="degree"></strong> - <span id="institution"></span><br />
+          <small><span id="eduStartDate"></span> - <span id="eduEndDate"></span>, <span id="eduLocation"></span></small>
+          <p id="eduDescription"></p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Academic Projects</h2>
+        <div id="projectsList"></div>
+
+      </div>
+    </div>
+  </div>
+  <br />
+  <div style="text-align: center; margin-bottom: 20px;">
+    <button class="download-btn" onclick="downloadPDF()">Download as PDF</button>
+  </div>
+
+  <script>
+    // Load all localStorage data
+    const contactData = JSON.parse(localStorage.getItem('contactData')) || {};
+    const experienceData = JSON.parse(localStorage.getItem('experienceData')) || {};
+    const educationData = JSON.parse(localStorage.getItem('educationData')) || {};
+    const skillsData = JSON.parse(localStorage.getItem('skillsData')) || {};
+    const summaryData = JSON.parse(localStorage.getItem('summaryData')) || {};
+    const projectsData = JSON.parse(localStorage.getItem('projectsData')) || [];
+    const certificationsData = JSON.parse(localStorage.getItem('certificationsData')) || [];
+    const profilesData = JSON.parse(localStorage.getItem('profilesData')) || [];
+    const languagesData = contactData.languages || '';
+
+    // Fill contact info
+    document.getElementById('name').textContent = `${contactData.firstName || ''} ${contactData.lastName || ''}`;
+    document.getElementById('profession').textContent = contactData.profession || '';
+    document.getElementById('location').textContent = `📍 ${contactData.city || ''}, ${contactData.state || ''}`;
+    document.getElementById('phone').textContent = `📞 ${contactData.phone || ''}`;
+    document.getElementById('email').textContent = `📧 ${contactData.email || ''}`;
+    document.getElementById('linkedin').innerHTML = `<strong>LinkedIn:</strong> <a href="${contactData.linkedin || '#'}" target="_blank"">${contactData.linkedin || 'linkedin.com/in/yourprofile'}</a>`;
+
+
+    // Summary
+    document.getElementById('summaryText').textContent = summaryData.summaryText || '';
+
+    // Experience
+    document.getElementById('jobTitle').textContent = experienceData.jobTitle || '';
+    document.getElementById('employer').textContent = experienceData.employer || '';
+    document.getElementById('startDate').textContent = experienceData.startDate || '';
+    document.getElementById('endDate').textContent = experienceData.endDate || '';
+    document.getElementById('jobLocation').textContent = experienceData.jobLocation || '';
+    document.getElementById('jobDescription').textContent = experienceData.jobDescription || '';
+
+    // Education
+    document.getElementById('degree').textContent = educationData.degree || '';
+    document.getElementById('institution').textContent = educationData.institution || '';
+    document.getElementById('eduStartDate').textContent = educationData.eduStartDate || '';
+    document.getElementById('eduEndDate').textContent = educationData.eduEndDate || '';
+    document.getElementById('eduLocation').textContent = educationData.eduLocation || '';
+    document.getElementById('eduDescription').textContent = educationData.eduDescription || '';
+
+    // Skills
+    const skillsList = document.getElementById('skillsList');
+    if (skillsData.skillsInput) {
+      skillsData.skillsInput.split(',').forEach(skill => {
+        const li = document.createElement('li');
+        li.textContent = skill.trim();
+        skillsList.appendChild(li);
+      });
+    }
+
+    // Projects
+    const projectsList = document.getElementById('projectsList');
+    projectsData.forEach(proj => {
+      const div = document.createElement('div');
+      div.classList.add('item-block');
+      div.innerHTML = `<strong>${proj.title}</strong><p>${proj.description}</p>`;
+      projectsList.appendChild(div);
+    });
+
+    // Certifications
+    const certList = document.getElementById('certificationsList');
+    certificationsData.forEach(cert => {
+      const li = document.createElement('li');
+      li.innerHTML = `<strong>${cert.name}</strong><br/><span>${cert.org}</span>`;
+      certList.appendChild(li);
+    });
+
+    // Profiles
+    const profileList = document.getElementById('profilesList');
+    profilesData.forEach(profile => {
+      const div = document.createElement('div');
+      div.classList.add('profile-link');
+      div.innerHTML = `<strong>${profile.platform}:</strong> <a href="${profile.url}" target="_blank">${profile.url}</a>`;
+      profileList.appendChild(div);
+    });
+
+    // Languages
+    const languagesList = document.getElementById('languagesList');
+    if (languagesData) {
+      const langItems = languagesData.split(',').map(lang => `<li>${lang.trim()}</li>`).join('');
+      languagesList.innerHTML = `<ul>${langItems}</ul>`;
+    } else {
+      languagesList.innerHTML = '<p>No languages listed.</p>';
+    }
+    async function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF('p', 'pt', 'a4');
+
+      const resume = document.querySelector('.resume-container');
+
+      const canvas = await html2canvas(resume, {
+        scale: 2,
+        useCORS: true,
+        scrollY: -window.scrollY,
+      });
+
+      const imgData = canvas.toDataURL('image/jpeg', 1.0);
+      const pdfWidth = doc.internal.pageSize.getWidth();
+      const imgProps = doc.getImageProperties(imgData);
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      doc.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+
+      doc.save('resume.pdf');
+    }
+  </script>
+</body>
+</html>
