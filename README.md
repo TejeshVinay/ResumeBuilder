@@ -76,36 +76,4 @@ If you clone this repository, you can still:
 
 ---
 
-## 👨‍💻 Authors
-
-- **Tejesh Vinay Ch** – 23241A66E2  
-- **Venkatesh N** – 23241A66H2  
-- **Vineeth Reddy P** – 23241A66H4  
-
-**Under the guidance of:**  
-*V. Manasa, Assistant Professor, AIML Department*
-
----
-
-## 📜 License
-
-```
-This project is proprietary. The resume templates and design layouts are protected
-and not included in the repository. You may view the source for educational purposes only.
-
-Redistribution, commercial use, or reuse of resume templates is strictly prohibited
-without prior written permission from the authors.
-```
-
----
-
-## 📌 Acknowledgments
-
-- Gokaraju Rangaraju Institute of Engineering and Technology
-- jsPDF – [https://github.com/parallax/jsPDF](https://github.com/parallax/jsPDF)
-- html2canvas – [https://html2canvas.hertzen.com/](https://html2canvas.hertzen.com/)
-- Mozilla MDN – Documentation for Web APIs
-
----
-
 © 2025 ResumePro Team. All rights reserved.
