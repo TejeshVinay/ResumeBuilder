@@ -907,7 +907,7 @@
                 const match = imageName.match(/img(\d+)\.jpg/);
                 if (match && match[1]) {
                     const num = match[1]; // Extracted number (e.g., 1-9)
-                    const targetPage = `r${num}.html`;
+                    const targetPage = `resume_templates/r${num}.html`;
                     localStorage.removeItem('selectedTemplate');
                     window.location.href = targetPage;
                 } else {
